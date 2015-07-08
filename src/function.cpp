@@ -122,7 +122,12 @@ void Function::fill(zend_internal_function_info *info, const char *classname) co
     info->return_reference = false;
     
     // passing by reference is not used
+#if PHP_VERSION_ID >= 50600
+    info->_allow_null = false;
+    info->_is_variadic = false;
+#else
     info->pass_rest_by_reference = false;
+#endif
 }
 
 /**
